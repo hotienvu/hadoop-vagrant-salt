@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 SALT_MASTER_IP_ADDRESS = "10.10.1.11"
 
-script = "sudo echo '#{SALT_MASTER_IP_ADDRESS} salt' >> /etc/hosts"
+script = "sudo echo '#{SALT_MASTER_IP_ADDRESS} salt' >> /etc/hosts; salt-call state.highstate"
 
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.network "private_network", ip: SALT_MASTER_IP_ADDRESS
     master.vm.hostname = "salt"
     master.vm.provision "salt" do |salt|
+      salt.master_config = "salt/etc/master"
       salt.install_master = true
       salt.no_minion = true
       salt.run_highstate = false

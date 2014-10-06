@@ -1,2 +1,3 @@
 .vagrant/
 salt/roots/hadoop/files/dsa*
+.DS_STORE
